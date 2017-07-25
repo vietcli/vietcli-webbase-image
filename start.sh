@@ -19,9 +19,6 @@ if [ ! -f /vietcli-pw.txt ]; then
     # Enable Magento 2 site
     ln -s /etc/nginx/sites-available/magento2.conf /etc/nginx/sites-enabled/
 
-    # Add Magento configuration
-    mkdir /etc/nginx/conf.d/ext
-    ln -s /home/vietcli/files/html/nginx.conf.sample /etc/nginx/conf.d/ext/magento2.conf
 fi
 
 # Check HTTP_SERVER_NAME environment variable to set Virtual Host Name
