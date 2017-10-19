@@ -37,7 +37,7 @@ RUN apt-get -y install nginx php5.6-fpm php5.6-mysql
 RUN apt-get -y install imagemagick
 
 # Magento 2 Requirements
-RUN apt-get -y install php5.6-imagick php5.6-intl php5.6-curl php5.6-xsl php5.6-mcrypt php5.6-mbstring php5.6-bcmath php5.6-gd php5.6-zip
+RUN apt-get -y install php5.6-imagick php5.6-intl php5.6-curl php5.6-xsl php5.6-mcrypt php5.6-mbstring php5.6-bcmath php5.6-gd php5.6-zip php5.6-soap
 
 # nginx config
 RUN sed -i -e"s/user\s*www-data;/user vietcli www-data;/" /etc/nginx/nginx.conf
@@ -108,6 +108,10 @@ RUN useradd -m -d /home/vietcli -p $(openssl passwd -1 'vietcli') -G root -s /bi
 # Magento Initialization and Startup Script
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
+
+# Add local config on start up
+ADD rc.local    /etc/rc.local
+RUN chmod +x    /etc/rc.local
 
 #NETWORK PORTS
 # private expose
