@@ -109,10 +109,6 @@ RUN useradd -m -d /home/vietcli -p $(openssl passwd -1 'vietcli') -G root -s /bi
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 
-# Add local config on start up
-ADD rc.local    /etc/rc.local
-RUN chmod +x    /etc/rc.local
-
 #NETWORK PORTS
 # private expose
 EXPOSE 443
