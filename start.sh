@@ -25,7 +25,8 @@ fi
 if [ -z "$HTTP_SERVER_NAME" ]; then
     echo "HTTP_SERVER_NAME is empty"
 else
-    sed -i "s/magento2.local/${HTTP_SERVER_NAME}/" /etc/nginx/sites-available/default
+    sed -i "s/magento2.local/${HTTP_SERVER_NAME}/" /etc/nginx/sites-available/magento2.conf
+    sed -i "s/*.magento2.local/*.${HTTP_SERVER_NAME}/" /etc/nginx/sites-available/magento2.conf
     service nginx restart
     service php5.6-fpm restart
 fi
