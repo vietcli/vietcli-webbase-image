@@ -37,12 +37,13 @@ RUN apt-get -y install nginx php5.6-fpm php5.6-mysql
 RUN apt-get -y install imagemagick
 
 # Magento 2 Requirements
-RUN apt-get -y install php5.6-imagick php5.6-intl php5.6-curl php5.6-xsl php5.6-mcrypt php5.6-mbstring php5.6-bcmath php5.6-gd php5.6-zip
+RUN apt-get -y install php5.6-imagick php5.6-intl php5.6-curl php5.6-xsl php5.6-mcrypt php5.6-mbstring php5.6-bcmath php5.6-gd php5.6-zip php5.6-soap
 
 # nginx config
 RUN sed -i -e"s/user\s*www-data;/user vietcli www-data;/" /etc/nginx/nginx.conf
 RUN sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf
 RUN sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf
+RUN sed -i "61i \\\troot /home/vietcli/files/html;" /etc/nginx/nginx.conf
 #RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # php-fpm config
@@ -52,6 +53,12 @@ RUN sed -i -e "s/;always_populate_raw_post_data\s*=\s*-1/always_populate_raw_pos
 #RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/5.6/fpm/php-fpm.conf
 RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/5.6/fpm/pool.d/www.conf
 RUN sed -i -e "s/user\s*=\s*www-data/user = vietcli/g" /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_flag[log_errors] = on" >> /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_value[memory_limit] = -1" >> /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_value[max_execution_time] = 3600" >> /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_value[max_input_vars] = 36000" >> /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_value[post_max_size] = 20M" >> /etc/php/5.6/fpm/pool.d/www.conf
+RUN echo "php_admin_value[upload_max_filesize] = 20M" >> /etc/php/5.6/fpm/pool.d/www.conf
 # replace # by ; RUN find /etc/php/7.0/mods-available/tmp -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # nginx site conf
