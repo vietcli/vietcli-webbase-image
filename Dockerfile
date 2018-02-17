@@ -36,6 +36,27 @@ RUN apt-get -y install nginx php7.1-fpm php7.1-mysql
 # Install imagemagick
 RUN apt-get -y install imagemagick
 
+# Install Xdebug
+#RUN apt-get -y install php-xdebug \
+#&& PHP_VERSION=$(php -r "echo PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;") \
+#&& PHP_EXT_DIR=$(php -i | grep extension_dir | tr -s ' ' | cut -d ' ' -f 5) \
+#&& echo "[Xdebug]" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "zend_extension=\"${PHP_EXT_DIR}/xdebug.so\"" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "xdebug.remote_enable = 1" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "xdebug.remote_port = 9000" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "xdebug.idekey = VIETCLI" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "xdebug.max_nesting_level = 512" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "xdebug.file_link_format = phpstorm://open?%f:%l" >> /etc/php/$PHP_VERSION/fpm/php.ini \
+#&& echo "[Xdebug]" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "zend_extension=\"${PHP_EXT_DIR}/xdebug.so\"" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.remote_enable = 1" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.remote_port = 9000" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.idekey = VIETCLI" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.max_nesting_level = 512" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.file_link_format = phpstorm://open?%f:%l" >> /etc/php/$PHP_VERSION/cli/php.ini \
+#&& echo "xdebug.profiler_enable=0" >> /etc/php/$PHP_VERSION/mods-available/xdebug.ini \
+#&& echo "xdebug.remote_host=172.18.0.1" >> /etc/php/$PHP_VERSION/mods-available/xdebug.ini \
+
 # Magento 2 Requirements
 RUN apt-get -y install php7.1-imagick php7.1-intl php7.1-curl php7.1-xsl php7.1-mcrypt php7.1-mbstring php7.1-bcmath php7.1-gd php7.1-zip php7.1-soap
 
