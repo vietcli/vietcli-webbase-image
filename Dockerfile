@@ -31,7 +31,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 RUN apt-get -y install pwgen python-setuptools curl git nano sudo unzip openssh-server openssl
 #RUN apt-get -y install mysql-server nginx php-fpm php-mysql
-RUN apt-get -y install nginx php7.1-fpm php7.1-mysql
+RUN apt-get -y install nginx php7.0-fpm php7.0-mysql
 
 # Install imagemagick
 RUN apt-get -y install imagemagick
@@ -58,7 +58,7 @@ RUN apt-get -y install imagemagick
 #&& echo "xdebug.remote_host=172.18.0.1" >> /etc/php/$PHP_VERSION/mods-available/xdebug.ini \
 
 # Magento 2 Requirements
-RUN apt-get -y install php7.1-imagick php7.1-intl php7.1-curl php7.1-xsl php7.1-mcrypt php7.1-mbstring php7.1-bcmath php7.1-gd php7.1-zip php7.1-soap
+RUN apt-get -y install php7.0-imagick php7.0-intl php7.0-curl php7.0-xsl php7.0-mcrypt php7.0-mbstring php7.0-bcmath php7.0-gd php7.0-zip php7.0-soap
 
 # nginx config
 RUN sed -i -e"s/user\s*www-data;/user vietcli www-data;/" /etc/nginx/nginx.conf
@@ -68,18 +68,18 @@ RUN sed -i "61i \\\troot /home/vietcli/files/html;" /etc/nginx/nginx.conf
 #RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # php-fpm config
-RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php/7.1/fpm/php.ini
-RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php/7.1/fpm/php.ini
-RUN sed -i -e "s/;always_populate_raw_post_data\s*=\s*-1/always_populate_raw_post_data = -1/g" /etc/php/7.1/fpm/php.ini
-#RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.1/fpm/php-fpm.conf
-RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/7.1/fpm/pool.d/www.conf
-RUN sed -i -e "s/user\s*=\s*www-data/user = vietcli/g" /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_flag[log_errors] = on" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_value[memory_limit] = -1" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_value[max_execution_time] = 3600" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_value[max_input_vars] = 36000" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_value[post_max_size] = 20M" >> /etc/php/7.1/fpm/pool.d/www.conf
-RUN echo "php_admin_value[upload_max_filesize] = 20M" >> /etc/php/7.1/fpm/pool.d/www.conf
+RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php/7.0/fpm/php.ini
+RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php/7.0/fpm/php.ini
+RUN sed -i -e "s/;always_populate_raw_post_data\s*=\s*-1/always_populate_raw_post_data = -1/g" /etc/php/7.0/fpm/php.ini
+#RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf
+RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php/7.0/fpm/pool.d/www.conf
+RUN sed -i -e "s/user\s*=\s*www-data/user = vietcli/g" /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_flag[log_errors] = on" >> /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_value[memory_limit] = -1" >> /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_value[max_execution_time] = 3600" >> /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_value[max_input_vars] = 36000" >> /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_value[post_max_size] = 20M" >> /etc/php/7.0/fpm/pool.d/www.conf
+RUN echo "php_admin_value[upload_max_filesize] = 20M" >> /etc/php/7.0/fpm/pool.d/www.conf
 # replace # by ; RUN find /etc/php/7.0/mods-available/tmp -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # nginx site conf
@@ -123,7 +123,7 @@ RUN wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-
 
 # Reload PHP Configurations
 
-RUN service php7.1-fpm restart
+RUN service php7.0-fpm restart
 
 # Add system user for Magento
 RUN useradd -m -d /home/vietcli -p $(openssl passwd -1 'vietcli') -G root -s /bin/bash vietcli \
