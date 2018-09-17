@@ -83,8 +83,7 @@ RUN echo "php_admin_value[upload_max_filesize] = 20M" >> /etc/php/7.0/fpm/pool.d
 # replace # by ; RUN find /etc/php/7.0/mods-available/tmp -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # nginx site conf
-ADD ./nginx-site.conf /etc/nginx/sites-available/default
-ADD ./nginx.magento2.conf /etc/nginx/sites-available/magento2.conf
+ADD ./nginx.default.conf /etc/nginx/conf.d/default.conf
 
 # Generate self-signed ssl cert
 RUN mkdir /etc/nginx/ssl/
