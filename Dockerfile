@@ -1,6 +1,12 @@
 FROM ubuntu:16.04
 MAINTAINER Viet Duong<viet.duong@hotmail.com>
 
+# Compatible with :
+#    Ubuntu 16.04
+#    Nginx 1.15.x
+#    MySQL 14.14
+#    PHP 7.0
+
 # Set one or more individual labels
 LABEL vietcli.docker.base.image.version="0.1.0-beta"
 LABEL vendor="[VietCLI] vietduong/mage2-image"
@@ -20,8 +26,16 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV HTTP_SERVER_NAME magento2.local
 
 # Update apt-get
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys ABF5BD827BD9BF62 \
+    && echo 'deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx' >> /etc/apt/sources.list.d/nginx.list \
+    && apt-get update \
+    && apt-get install locales \
+    && locale-gen en_US.UTF-8 \
+    && export LANG=en_US.UTF-8 \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:ondrej/php \
+    && apt-get update \
+    && apt-get -y upgrade
 
 ## Add repo to install PHP7.1 on Ubuntu 16
 RUN apt-get -y install software-properties-common
@@ -31,7 +45,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 RUN apt-get -y install pwgen python-setuptools curl git nano sudo unzip openssh-server openssl
 #RUN apt-get -y install mysql-server nginx php-fpm php-mysql
-RUN apt-get -y install nginx php7.0-fpm php7.0-mysql
+RUN apt-get -y nginx=1.15.* nginx php7.0-fpm php7.0-mysql
 
 # Install imagemagick
 RUN apt-get -y install imagemagick
