@@ -45,7 +45,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update
 RUN apt-get -y install pwgen python-setuptools curl git nano sudo unzip openssh-server openssl
 #RUN apt-get -y install mysql-server nginx php-fpm php-mysql
-RUN apt-get -y nginx=1.15.* nginx php7.0-fpm php7.0-mysql
+RUN apt-get -y install nginx php7.0-fpm php7.0-mysql
 
 # Install imagemagick
 RUN apt-get -y install imagemagick
